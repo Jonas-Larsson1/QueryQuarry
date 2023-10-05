@@ -29,7 +29,6 @@ const handleShowMoreButton = () => {
 }
 
 const handleEndlessScroll = () => {
-    console.log('hi!')
     const pages = document.getElementsByClassName('page')
     const pagesArray = Array.from(pages)
     let currentPageIndex = 0
@@ -83,11 +82,13 @@ const displayArticles = (articles, query) => {
     const mainSection = document.querySelector('main')
     mainSection.innerHTML = ''
     hamburgerToggle.checked = false
+    let mobileLayout = false
     
     let articlesToDisplay, pagesToDisplay
     if (window.innerWidth <= 1000) {
         articlesToDisplay = 1
         pagesToDisplay = 45
+        mobileLayout = true
     } else if (window.innerWidth <= 1200) {
         articlesToDisplay = 4
         pagesToDisplay = 9
@@ -154,12 +155,16 @@ const displayArticles = (articles, query) => {
 
         pageCount += 1
 
-        const pageCounterElement = document.createElement('div')
-        pageCounterElement.classList.add('pageCount')
-        pageCounterElement.innerHTML = `
-            <p>Page ${pageCount} out of ${pagesToDisplay} </p>
-        `
-        pageElement.appendChild(pageCounterElement)
+        if (!mobileLayout) {
+            const pageCounterElement = document.createElement('div')
+            pageCounterElement.classList.add('pageCount')
+            pageCounterElement.innerHTML = `
+                <p>Page ${pageCount} out of ${pagesToDisplay} </p>
+            `
+            pageElement.appendChild(pageCounterElement)
+
+        }
+
         
         if (i + 1 < pagesToDisplay) {
             const scrollPromptElement = document.createElement('p')
@@ -299,13 +304,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     let throttled = false
-    const thottleDelay = 250
+    const thottleDelay = 450
     
     window.addEventListener('resize', event => {
         if (!throttled) {
             fetchAndDisplayQuery(currentTopic)
             throttled = true
-            console.log('RESIZED!')
             setTimeout(() => {
                 throttled = false
             }, thottleDelay)
