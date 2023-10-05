@@ -1,0 +1,215 @@
+@media (min-width: 1201px) {
+    
+    .pageGrid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 25rem 25rem;
+        grid-template-areas:
+        "one one two two"
+        "one one three four";
+        overflow: hidden;
+    }
+    
+    .page:nth-child(3n-1) .pageGrid {
+        grid-template-areas:
+        "five four one one"
+        "five three two two";
+    }
+    
+    .page:nth-child(3n) .pageGrid {
+        grid-template-areas:
+        "one one four three"
+        "two two five five";
+    }
+    
+    .page:nth-child(3n+4) .pageGrid {
+        grid-template-areas:
+        "four one one three"
+        "four two two five";
+    }
+
+    article:nth-child(1) p {
+        font-size: 2rem;
+    }
+    
+    article:nth-child(1) h2 {
+        font-size: 3rem;
+    }
+
+    article:nth-child(2) p {
+        font-size: 1.5rem;
+    }
+    
+    article:nth-child(2) h2 {
+        font-size: 2.5rem;
+    }
+    
+}
+
+@media (max-width: 1200px) and (min-width: 1001px) {
+    .pageGrid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 25rem 25rem 25rem;
+        overflow: hidden; 
+    }
+    
+    .page:nth-child(1) .pageGrid {
+        grid-template-rows: 12.5rem 25rem 25rem; 
+        grid-template-areas:
+        "one one"
+        "one one"
+        "two three";
+    }
+
+    .page:nth-child(3n-1) .pageGrid {     
+        grid-template-areas:
+        "one two"
+        "one three"
+        "four four";
+    }
+    
+    .page:nth-child(3n) .pageGrid {
+        grid-template-areas:
+        "one one"
+        "two three"
+        "four three";
+    }
+    
+    .page:nth-child(3n+4) .pageGrid {
+        grid-template-areas:
+        "two four"
+        "two three"
+        "one one";
+    }
+
+
+    article:nth-child(1n) p {
+        font-size: 1.5rem;
+    }
+
+    article:nth-child(1n) h2 {
+        font-size: 2rem;
+    }
+
+    article:nth-child(1) h2 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .pageGrid:nth-child(1n+1) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60vw;
+        grid-template-areas: 
+        "one";
+        overflow: hidden; 
+    }
+
+    article:nth-child(1n) p {
+        font-size: 1.5rem;
+    }
+
+    article:nth-child(1n) h2 {
+        font-size: 2rem;
+    }
+
+    header {
+        justify-content: center;
+    }
+
+    .hamburgerMenu {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        justify-items: center;
+        z-index: 120;
+        border: black 3px solid;
+        padding: 0.3rem;  
+    }
+    
+    .hamburgerMenu div {
+        background-color: #ee6907;;
+        position: relative;
+        width: 2.5rem;
+        height: 0.3rem;
+        margin: 0.2rem 0rem;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    #hamburgerToggle:checked + .hamburgerMenu .top {
+        transform: rotate(-45deg);
+        translate: 0 10px;
+    }
+    
+    #hamburgerToggle:checked + .hamburgerMenu .meat {
+        transform: rotate(45deg);
+        
+    }
+    
+    #hamburgerToggle:checked + .hamburgerMenu .bottom {
+        transform: scale(0);
+    }
+    
+    #hamburgerToggle:checked + .hamburgerMenu {
+        background-color: black;
+        border-color: white;
+        position: fixed;
+    }
+
+    #hamburgerToggle:checked + .hamburgerMenu div {
+        background-color: white;
+    }
+
+    #hamburgerToggle:checked ~ #navbar > .navbarList {
+        height: 100vh;
+        width: 100vw;
+        padding-top: 2rem;
+    }
+
+    .navbarList {
+        margin-top: 0;
+        padding: 0;
+        
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 0;
+        overflow: hidden;
+        transition: height .4s ease;
+        transition: all 0.3s ease;
+        background: linear-gradient(0deg, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585);
+    }
+
+    #headerLeft {
+        display: none;
+    }
+
+    #headerRight {
+        width: fit-content;
+        height: 6rem;
+        top: 1rem;
+        right: 1rem;
+        position: absolute;
+        display: flex;
+    }
+
+    #navbar {
+        position: fixed;
+        z-index: 100;
+    }
+
+    .navbarList li:first-of-type {
+        margin-left: initial;
+    }
+
+    .navbarList li:last-of-type {
+        margin-right: initial;
+    }
+
+    .navbarLink {
+        width: 30vw;
+        height: 5rem;
+        font-size: 2rem;
+    }
+}

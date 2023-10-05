@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/styles/articles.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/styles.css">
+    
+    <link rel="stylesheet" href="/styles/responsive.css">
+
+    <script src="/script/script.js" type="module"></script>
+    <title>QueryQuarry</title>
+</head>
+
+<body class="siteContainer" ontouchstart=""> 
+    <header>
+        <div id="headerLeft">
+            <img src="/images/logo2.svg">
+            <h3><em>Digging</em> up the latest news across the web.</h3>
+        </div>
+
+        <div id="headerMiddle"> 
+            <form id="searchForm" autocomplete="off">
+                <input type="text" 
+                id="searchInput" 
+                placeholder="What news do you want?" 
+                onfocus="this.placeholder='Search for anything..'" 
+                onfocusout="this.placeholder='What news do you want?'">
+                <button type="submit" class="primaryButton" id="searchButton"><span>Search</span></button>
+            </form>
+            <h2>Current topic: <span id="currentTopic"></span></h2>
+        </div>
+
+        <div id="headerRight">
+            <img src="/images/logo2small.svg">
+        </div>
+            <!-- <p>Or choose below:</p>
+            <select name="topicDropDown" id="topicDropDown">
+            </select> -->
+    </header>
+    <input id="hamburgerToggle" type="checkbox" />
+    <label class="hamburgerMenu" for="hamburgerToggle">
+        <div class="top"></div>
+        <div class="meat"></div>
+        <div class="bottom"></div>
+    </label>
+    <nav id="navbar">
+    </nav>
+        
+    <div class="contentContainer">
+        <main>
+        </main>
+    </div>
+
+    <footer>
+        <a>About</a>
+    </footer>
+
+
+</body>
+
+</html>

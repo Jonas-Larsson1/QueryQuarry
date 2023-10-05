@@ -1,0 +1,149 @@
+* {
+    font-family: 'Oswald', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+
+
+
+.siteContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.contentContainer {
+    display: flex; 
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+footer {
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    margin-top: 2rem;
+    background: linear-gradient(90deg, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
+    color: white;
+    text-align: center;
+    height: 1.5rem;
+    opacity: 0.5;
+    transition: 0.5s;
+    padding: 1rem;
+}
+
+footer:hover {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.coolShadow{
+    position: relative;
+    transform-style: preserve-3d;
+    /* border-radius: 1rem; */
+}
+
+.coolShadow::before {
+    content: "";
+    position: absolute; 
+    inset: 0px;
+    background: conic-gradient(from 90deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
+    /* filter: blur(1px); */
+    transform: translate3d(5px,10px,-1px);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.primaryButton {
+    /* margin: 0.5rem 0 1rem;
+    padding: 0.5rem; */
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    font-size: 2rem;
+
+    background-color: #ee6907;
+  
+    color: white;
+    border: 2px solid rgb(255, 255, 255);
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
+
+    transition: all 0.5s;
+}
+
+.primaryButton:hover {
+    background-color: #f79d03;
+}
+
+.primaryButton:active {
+    background-color: #ffd700;
+    transition: 0.1s;
+    box-shadow: inset 1px 1px 10px black;
+}
+
+.primaryButton span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.primaryButton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 2rem;
+    transition: 0.5s;
+}
+
+.primaryButton:hover span {
+    padding-right: 2rem;
+}
+
+.primaryButton:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.secondaryButton {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    padding: 0.5rem 1rem;
+    /* border-radius: 0.5rem;    */
+    border: 3px solid rgb(255, 255, 255);
+    /* box-shadow: 0 4px 8px rgb(0, 0, 0); */
+}
+
+.noDisplay {
+    display: none;
+}
+
+.noOpacity {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#hamburgerToggle {
+    display: none;
+}

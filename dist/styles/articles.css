@@ -1,0 +1,214 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 1s ease-in;
+}
+
+
+.pageCount {
+    height: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 3rem 0rem;
+    background: linear-gradient(90deg, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
+}
+
+.pageCount p {
+    color: white;
+    background-color: black;
+    padding: 0.5rem 1rem;
+    /* border-radius: 0.5rem;    */
+    border: 2px solid rgb(255, 255, 255);
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
+}
+
+
+.pageGrid {
+    display: grid;
+}
+
+article:nth-child(1) {
+    grid-area: one;
+}
+
+article:nth-child(2) {
+    grid-area: two;
+}
+
+article:nth-child(3) {
+    grid-area: three;
+}
+
+article:nth-child(4) {
+    grid-area: four;
+}
+
+article:nth-child(5) {
+    grid-area: five;
+}
+
+
+
+
+
+/* article {
+    
+    min-height: 80vh;
+
+
+    margin: 2rem 1rem;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: #f9f9f9;
+
+    border-radius: 15px;
+    border: 1px solid #ccc;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+article p {
+    margin-top: 1em;
+}
+
+
+article a:hover {
+    text-decoration: none;
+}
+
+article .author {
+    margin-top: auto;
+    color: #000000b5;
+}
+
+article img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+
+    margin-top: 10%;
+} */
+
+
+article {
+    margin: 1rem;
+
+}
+
+
+
+.articleCard {
+    /* border-radius: 1rem; */
+    border: 2px solid rgb(255, 255, 255);
+    /* box-shadow: 0 4px 8px rgb(0, 0, 0); */
+    height: 100%;
+    overflow:hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+
+.articleCardContent {
+    /* margin: 1rem; */
+    padding: 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(100%); 
+    transition: transform 2s ease, opacity 1s ease; 
+    height: 100%;
+
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, 
+        rgba(0, 0, 0, 0.75) 75%, 
+        rgba(0, 0, 0, 1) 100%); 
+}
+
+.articleCard h2 {
+    position: absolute;
+    margin: 1rem;
+    opacity: 1;
+    font-size: 1.5rem;
+    color: rgb(245, 245, 245);
+    transition: opacity 0.6s ease 0.6s;
+}
+
+.articleCardContent p {
+ 
+    margin-top: auto;
+    margin-bottom: 2rem;
+    
+}
+
+
+.author {
+    
+    justify-self: flex-end;
+    color: gray;
+    font-style: italic;
+}
+
+.source {
+    color: white;
+}
+
+.articleCardContent a {
+    color: indianred;
+}
+
+@media (hover: hover){
+    .articleCard:hover .articleCardContent {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.6s ease 0.2s, transform 0.3s ease 0.2s;
+    }
+
+    .articleCard:hover h2 {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+}
+
+@media (hover: none){
+    .articleCard:hover .articleCardContent {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.0s ease, transform 0.0s ease;
+    }
+
+    .articleCard:hover h2 {
+        opacity: 0;
+        transition: opacity 0.0s ease;
+    }
+}
+
+
+
+/* .articleCard:hover .articleCardContent h2 {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.articleCard:hover .author {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease;
+} */
+
+
+.scrollPrompt {
+   margin: 0;
+}
+
+
