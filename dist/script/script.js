@@ -1,4 +1,4 @@
-
+const currentTopic = ''
 
 const handleShowMoreButton = () => {
     const showMoreButtons = document.getElementsByClassName('showMoreButton')
@@ -29,6 +29,7 @@ const handleShowMoreButton = () => {
 }
 
 const handleEndlessScroll = () => {
+    console.log('hi!')
     const pages = document.getElementsByClassName('page')
     const pagesArray = Array.from(pages)
     let currentPageIndex = 0
@@ -295,9 +296,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchAndDisplayQuery(currentTopic)
     fillNavbarTopics(defaultTopics)
+
+
+    let throttled = false
+    const thottleDelay = 250
     
     window.addEventListener('resize', event => {
-        fetchAndDisplayQuery(currentTopic)
+        if (!throttled) {
+            fetchAndDisplayQuery(currentTopic)
+            throttled = true
+            console.log('RESIZED!')
+            setTimeout(() => {
+                throttled = false
+            }, thottleDelay)
+        }
     })
 
     // gets the input from the search box
