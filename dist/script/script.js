@@ -56,7 +56,7 @@ const handleEndlessScroll = () => {
   
     window.addEventListener('scroll', () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement
-      if (scrollTop + clientHeight >= scrollHeight - 200) {
+      if (scrollTop + clientHeight >= scrollHeight - 400) {
         scrollPromptElement.classList.add('noOpacity')
         showNextPage()
       }
@@ -188,21 +188,12 @@ const displayArticles = (articles, query) => {
     // handleShowMoreButton()
 }
 
-// updates the current topic in sidebar
+// updates the current topic headline
 const updateCurrentTopic = (query) => {
-    currentTopicElement = document.getElementById('currentTopic')
+    const currentTopicElement = document.getElementById('currentTopic')
     currentTopicElement.textContent = `${query}`
 }
 
-
-// formats a date in the past (set by days variable) to YYYY-MM-DD format
-const formatPastDate = (days) => {
-    const fromDate = new Date()
-    fromDate.setDate(fromDate.getDate() - days)
-    const formattedDate = fromDate.toISOString().split('T')[0]
-
-    return formattedDate
-}
 
 const fetchAndDisplayQuery = async (query) => {
     const apiUrl = `/.netlify/functions/getArticles?query=${query}`
@@ -217,10 +208,12 @@ const fetchAndDisplayQuery = async (query) => {
       const data = await response.json()
   
       const articles = data.articles;
-      displayArticles(articles, query)
-
+      const queryParam = query
+      displayArticles(articles, queryParam)
+      saveToSessionStorage(articles, queryParam)
+      
     } catch (error) {
-      console.error('We got an error:', error);
+        console.error('We got an error:', error);
     }
 }
 

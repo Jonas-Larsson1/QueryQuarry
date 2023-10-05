@@ -133,6 +133,17 @@ footer:hover {
     /* border-radius: 0.5rem;    */
     border: 3px solid rgb(255, 255, 255);
     /* box-shadow: 0 4px 8px rgb(0, 0, 0); */
+    transition: all 0.5s;
+}
+
+.secondaryButton:hover {
+    border-color: #f79d03;
+}
+
+.secondaryButton:active {
+    background-color: #ffd700;
+    transition: 0.1s ease;
+    box-shadow: inset 1px 1px 10px black;
 }
 
 .noDisplay {
