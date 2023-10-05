@@ -204,36 +204,23 @@ const formatPastDate = (days) => {
     return formattedDate
 }
 
-// makes the api request and calls displayArticls if the response is ok
-const fetchAndDisplayQuery = (query) => {
-    const apiUrl = `https://newsapi.org/v2/everything?q=${query}` +
-    `&language=en` +
-    `&pageSize=80` +
-    // `&searchIn=title` +
-    `&from=${formatPastDate(30)}` +
-    `&sortBy=relevancy` +
-    `&excludeDomains=slashdot.org` +
-    `&apiKey=${apiKey}`
+const fetchAndDisplayQuery = async (query) => {
+    const apiUrl = `/.netlify/functions/getArticles?query=${query}`
 
-    const savedArticlesString = sessionStorage.getItem(`${query}_Articles`)
+    try {
+      const response = await fetch(apiUrl, 
+        {
+            method: "GET",
+            headers: { accept: "application/json" },
+        })
 
-    if (!savedArticlesString) {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Response was not ok :-(')
-                }
-                return response.json()
-            })
-            .then(data => {
-                console.log('Fetched article data:', data)
-                displayArticles(data.articles, query)
-                saveToSessionStorage(data.articles, query)
-            })
-            .catch(error => console.error('We got an error :s', error))
-    } else {
-        const articles = JSON.parse(savedArticlesString)
-        displayArticles(articles, query)
+      const data = await response.json()
+  
+      const articles = data.articles;
+      displayArticles(articles, query)
+
+    } catch (error) {
+      console.error('We got an error:', error);
     }
 }
 
