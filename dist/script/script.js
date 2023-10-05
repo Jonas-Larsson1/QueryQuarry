@@ -1,4 +1,3 @@
-const apiKey = ''
 
 
 const handleShowMoreButton = () => {
