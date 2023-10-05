@@ -206,7 +206,7 @@ const formatPastDate = (days) => {
 
 const fetchAndDisplayQuery = async (query) => {
     const apiUrl = `/.netlify/functions/getArticles?query=${query}`
-
+    
     try {
       const response = await fetch(apiUrl, 
         {
