@@ -318,19 +318,24 @@ document.addEventListener('DOMContentLoaded', () => {
     fillNavbarTopics(defaultTopics)
 
 
+    let currentWindowWidth = window.innerWidth
     let throttled = false
     const thottleDelay = 200
     
+
     window.addEventListener('resize', event => {
-        setTimeout(() => {
-            if (!throttled) {
+        if (!throttled) {
+            let newWindowWidth = window.innerWidth
+            if (newWindowWidth !== currentWindowWidth) {
+                console.log('new width detected')
                 fetchAndDisplayQuery(currentTopic)
                 throttled = true
                 setTimeout(() => {
                     throttled = false
                 }, thottleDelay)
             }
-        }, 100)
+            currentWindowWidth = newWindowWidth
+        }
     })
 
     // gets the input from the search box

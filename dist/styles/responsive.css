@@ -99,6 +99,7 @@
 }
 
 @media (max-width: 1000px) {
+
     .pageGrid:nth-child(1n+1) {
         grid-template-columns: 1fr;
         grid-template-rows: 60vw;
