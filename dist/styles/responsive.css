@@ -213,3 +213,33 @@
         font-size: 2rem;
     }
 }
+
+@media (max-width: 500px) {
+    .pageGrid:nth-child(1n+1) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 100vw;
+        grid-template-areas: 
+        "one";
+        overflow: hidden; 
+    }
+
+    article:nth-child(1n) p {
+        font-size: 1rem;
+    }
+
+    article:nth-child(1n) h2 {
+        font-size: 1.5rem;
+    }
+
+    header {
+        justify-content: start;
+    }
+
+    #headerMiddle {
+        margin-top: 4rem;
+    }
+
+    #headerRight img {
+        height: 3.5rem;
+    }
+}

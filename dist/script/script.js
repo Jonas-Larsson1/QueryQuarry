@@ -203,23 +203,30 @@ const updateCurrentTopic = (query) => {
 
 const fetchAndDisplayQuery = async (query) => {
     const apiUrl = `/.netlify/functions/getArticles?query=${query}`
-    
-    try {
-      const response = await fetch(apiUrl, 
-        {
-            method: "GET",
-            headers: { accept: "application/json" },
-        })
+    const savedArticlesString = sessionStorage.getItem(`${query}_Articles`)
+    let articles 
 
-      const data = await response.json()
-  
-      const articles = data.articles;
-      const queryParam = query
-      displayArticles(articles, queryParam)
-      saveToSessionStorage(articles, queryParam)
+    if (!savedArticlesString) {
+        try {
+          const response = await fetch(apiUrl, 
+            {
+                method: "GET",
+                headers: { accept: "application/json" },
+            })
+    
+          const data = await response.json()
       
-    } catch (error) {
-        console.error('We got an error:', error);
+          articles = data.articles;
+          const queryParam = query
+          displayArticles(articles, queryParam)
+          saveToSessionStorage(articles, queryParam)
+          
+        } catch (error) {
+            console.error('We got an error:', error);
+        }
+    } else {
+        articles = JSON.parse(savedArticlesString)
+        displayArticles(articles, query)
     }
 }
 

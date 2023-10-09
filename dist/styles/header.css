@@ -70,6 +70,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex-shrink: 1;
 }
 
 #headerRight {
@@ -93,7 +94,8 @@ header {
 }
 
 #searchForm input {
-    padding: 0.2rem 1rem 0.2rem 0.2rem;
+    padding: 0.2rem 0rem 0.2rem 0.2rem;
+    /* margin: 0.2rem 1rem 0.2rem 0.2rem; */
     border: none;
     border-right-width: 0;
 }
