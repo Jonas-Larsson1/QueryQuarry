@@ -1,5 +1,8 @@
 @media (min-width: 1201px) {
-    
+    .hiddenItem {
+        display: none;
+    }
+
     .pageGrid {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-template-rows: 25rem 25rem;
@@ -116,6 +119,10 @@
         justify-content: center;
     }
 
+    .hiddenItem {
+        display: block;
+    }
+
     .hamburgerMenu {
         position: absolute;
         left: 1rem;
@@ -126,6 +133,9 @@
         z-index: 120;
         border: black 3px solid;
         padding: 0.3rem;  
+
+        height: 2.5rem;
+        width: 2.5rem;
     }
     
     .hamburgerMenu div {
@@ -139,7 +149,7 @@
     
     #hamburgerToggle:checked + .hamburgerMenu .top {
         transform: rotate(-45deg);
-        translate: 0 10px;
+        translate: 0 12.5px;
     }
     
     #hamburgerToggle:checked + .hamburgerMenu .meat {
@@ -163,22 +173,36 @@
 
     #hamburgerToggle:checked ~ #navbar > .navbarList {
         height: 100vh;
-        width: 100vw;
-        padding-top: 2rem;
+        width: calc(100vw);
+
+        scrollbar-gutter: stable;
     }
 
     .navbarList {
+        align-items: center;
         margin-top: 0;
         padding: 0;
-        
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: 10vh;
         height: 0;
         overflow: hidden;
         transition: height .4s ease;
         transition: all 0.3s ease;
         background: linear-gradient(0deg, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585);
+    }
+
+    .navbarItem {
+        margin: 1rem;
+    }
+
+    .navbarList li:nth-child(odd) {
+        justify-content: start;
+    }
+
+    .navbarList li:nth-child(even) {
+        justify-content: end;
     }
 
     #headerLeft {
@@ -197,14 +221,6 @@
     #navbar {
         position: fixed;
         z-index: 100;
-    }
-
-    .navbarList li:first-of-type {
-        margin-left: initial;
-    }
-
-    .navbarList li:last-of-type {
-        margin-right: initial;
     }
 
     .navbarLink {

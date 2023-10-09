@@ -261,6 +261,14 @@ const fillNavbarTopics = (topics) => {
    
     navbar.appendChild(navList)
 
+    const hiddenNavItem = document.createElement('div')
+    hiddenNavItem.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
+    const hiddenNavItem2 = document.createElement('div')
+    hiddenNavItem2.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
+    navList.appendChild(hiddenNavItem)
+    navList.appendChild(hiddenNavItem2)
+
+
     for (const topic of topics) {
         const navItem = document.createElement('li')
         navItem.classList.add('navbarItem')
@@ -311,16 +319,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     let throttled = false
-    const thottleDelay = 450
+    const thottleDelay = 200
     
     window.addEventListener('resize', event => {
-        if (!throttled) {
-            fetchAndDisplayQuery(currentTopic)
-            throttled = true
-            setTimeout(() => {
-                throttled = false
-            }, thottleDelay)
-        }
+        setTimeout(() => {
+            if (!throttled) {
+                fetchAndDisplayQuery(currentTopic)
+                throttled = true
+                setTimeout(() => {
+                    throttled = false
+                }, thottleDelay)
+            }
+        }, 100)
     })
 
     // gets the input from the search box
