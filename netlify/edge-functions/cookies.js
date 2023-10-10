@@ -5,7 +5,7 @@ export default async (request, context) => {
       case "set":
         context.cookies.set({
           name: "action",
-          value: "hello",
+          value: "korv",
         });
   
         return new Response('Cookie value has been set. Reload this page without the "action" parameter to see it.');

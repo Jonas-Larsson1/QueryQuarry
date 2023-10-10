@@ -358,6 +358,26 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 
+const invokeEdgeFunction = async (action) => {
+    const apiUrl = `/cookies?action=${action}`;
+  
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+    
+      console.log('Response from edge function:', response);
+    } catch (error) {
+      console.error('Error invoking edge function:', error);
+    }
+  };
 
-
-
+invokeEdgeFunction('clear');
