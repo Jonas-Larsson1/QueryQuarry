@@ -1,4 +1,13 @@
 [build]
   command = "npm run build"
   functions = "netlify/functions"
+  edge_functions = "netlify/edge-functions"
   publish = "dist"
+
+[[edge_functions]]
+  path = "/cookies"
+  function = "cookies"
+
+[[edge_functions]]
+  path = "/abtest"
+  function = "abtest"
