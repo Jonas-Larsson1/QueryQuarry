@@ -12,32 +12,36 @@ const formatPastDate = (days) => {
 
 exports.handler = async (event, context) => {
     try {
-      const { query } = event.queryStringParameters
-      const url = `https://newsapi.org/v2/everything?q=${query}` +
-        `&language=en` +
-        `&pageSize=80` +
-        `&from=${formatPastDate(30)}` +
-        `&sortBy=relevancy` +
-        `&excludeDomains=slashdot.org` +
-        `&apiKey=${process.env.NEWS_API_KEY}`
-  
+      const { query, category } = event.queryStringParameters
+
+      const url = `http://api.mediastack.com/v1/news?access_key=${process.env.MEDIASTACK_API_KEY}` +
+      `&categories=${category}` +
+      `&keywords=${query}` +
+      `&languages=en` +
+      `&countries=us` +
+      `&sort=popularity` +
+      `&sources=-phys,-nytimes,-science` +
+      `&limit=100` 
+
       let response = await axios.get(url,
         {
             headers: { Accept: "application/json", "Accept-Encoding": "identity" },
-            params: { trophies: true },
+            // params: { trophies: true },
         } 
       )
 
-      let articles = response.data.articles
-  
+      let articles = response.data.data.filter(article => article.image)
+      // console.log('Response from API:', response)
+      // console.log(articles)
       return {
         statusCode: 200,
         body: JSON.stringify({ articles }),
       }
     } catch (error) {
+      // console.log(error)
       return {
         statusCode: 500,
-        body: JSON.stringify({ error }),
+        body: JSON.stringify({ error }), 
       }
     }
   }

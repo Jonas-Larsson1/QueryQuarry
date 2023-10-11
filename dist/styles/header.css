@@ -104,6 +104,11 @@ header {
     outline: none;
 }
 
-#currentTopic {
+#currentCategory {
+    display: none;
+    color: #c71585;
+}
+
+#currentQuery {
     color: #c71585;
 }

@@ -121,9 +121,14 @@ main {
 }
 
 .secondaryButton:active {
-    background-color: #ffd700;
+    background-color: #ee6907;
     transition: 0.1s ease;
     box-shadow: inset 1px 1px 10px black;
+}
+
+.secondaryButton.selected {
+    border-color: #f79d03;
+    text-decoration: underline;
 }
 
 .noDisplay {

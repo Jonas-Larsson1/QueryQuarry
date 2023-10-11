@@ -1,4 +1,5 @@
-const currentTopic = ''
+let currentCategory = 'GENERAL'
+let currentQuery = ''
 
 const handleShowMoreButton = () => {
     const showMoreButtons = document.getElementsByClassName('showMoreButton')
@@ -69,9 +70,9 @@ const handleEndlessScroll = () => {
     }, delay)
 }
 
-const saveToSessionStorage = (articles, query) => {
+const saveToSessionStorage = (articles, query, category) => {
     const articlesString = JSON.stringify(articles)
-    sessionStorage.setItem(`${query}_Articles`, articlesString)
+    sessionStorage.setItem(`Category:${category}_Query:${query}`, articlesString)
 }
 
 // creates the article elements on the page based on the article objects it recieves
@@ -115,13 +116,21 @@ const displayArticles = (articles, query) => {
         const articlesToDisplayOnThisPage = (i === 0 && articlesToDisplay > 1) ? articlesToDisplay - 1 : articlesToDisplay
 
         for (let j = 0; j < articlesToDisplayOnThisPage && articleCount < articles.length; j++) {
-
-            
-
             const article = articles[articleCount]
             // console.log('Article title:', article.title)
             // console.log('Article description', article.description)
             
+            let author = article.author
+            let description = article.description
+
+            if (!article.author) {
+                author = ""
+            }
+
+            if (description.length > 200) {
+                description = description.slice(0, 200) + '...'
+            } 
+
             const articleElement = document.createElement('article')
             articleElement.classList.add('coolShadow')
 
@@ -131,13 +140,13 @@ const displayArticles = (articles, query) => {
                 to bottom, rgba(0, 0, 0, 0.0) 0%,   
                 rgba(0, 0, 0, 0.5) 50%, 
                 rgba(0, 0, 0, 1) 100%), 
-                url('${article.urlToImage}')">
+                url('${article.image}')">
 
                 <h2>${article.title}</h2> 
                 <div class="articleCardContent">
-                    <p>${article.description}</p>
-                    <span class="author">${article.author}</span>
-                    <span class="source">Continue reading:&nbsp;<a href="${article.url}" target="_blank">${article.source.name}</a></span>
+                    <p>${description}</p>
+                    <span class="author">${author}</span>
+                    <span class="source">Continue reading:&nbsp;<a href="${article.url}" target="_blank">${article.source}</a></span>
                 </div>
             </div>
             `
@@ -186,24 +195,39 @@ const displayArticles = (articles, query) => {
 
 
     }
-    updateCurrentTopic(query)
-    // fillTopicDropdown(defaultTopics)
+    // fillCategoryDropdown(defaultCategories)
     const searchInput = document.getElementById('searchInput')
     searchInput.value = ''
     handleEndlessScroll()
     // handleShowMoreButton()
 }
 
-// updates the current topic headline
-const updateCurrentTopic = (query) => {
-    const currentTopicElement = document.getElementById('currentTopic')
-    currentTopicElement.textContent = `${query}`
+// updates the current category headline
+const updateCurrentCategory = (query,category) => {
+    const currentCategoryElement = document.getElementById('currentCategory')
+    const currentQueryElement = document.getElementById('currentQuery')
+    
+    const navbarLinks = document.querySelectorAll('.navbarLink');
+    navbarLinks.forEach(link => {
+        link.classList.remove('selected');
+    });
+    const activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
+    activeNavLink.classList.add('selected')
+
+    if (!currentQueryElement.textContent) {
+        currentQueryElement.textContent = 'No query entered'
+    } else {
+        currentQueryElement.textContent = `${query.toUpperCase()}`
+    }
+    currentCategoryElement.textContent = `${category.toUpperCase()}`
 }
 
 
-const fetchAndDisplayQuery = async (query) => {
-    const apiUrl = `/.netlify/functions/getArticles?query=${query}`
-    const savedArticlesString = sessionStorage.getItem(`${query}_Articles`)
+const fetchAndDisplayQuery = async (query, category) => {
+    const lowercaseCategory = category ? category.toLowerCase() : ''
+    const apiUrl = `/.netlify/functions/getArticles?query=${query}&category=${lowercaseCategory}`
+
+    const savedArticlesString = sessionStorage.getItem(`Category:${category}_Query:${query}`)
     let articles 
 
     if (!savedArticlesString) {
@@ -215,19 +239,22 @@ const fetchAndDisplayQuery = async (query) => {
             })
     
           const data = await response.json()
-      
-          articles = data.articles;
-          const queryParam = query
-          displayArticles(articles, queryParam)
-          saveToSessionStorage(articles, queryParam)
           
+          articles = data.articles
+
+
+
         } catch (error) {
             console.error('We got an error:', error);
         }
     } else {
         articles = JSON.parse(savedArticlesString)
-        displayArticles(articles, query)
     }
+
+    displayArticles(articles, query)
+    saveToSessionStorage(articles, query, category)
+    updateCurrentCategory(query,category)
+    currentCategory = category.toUpperCase()
 }
 
 // const searchForm = document.getElementById('searchForm')
@@ -237,22 +264,21 @@ const fetchAndDisplayQuery = async (query) => {
 //     fetchAndDisplayQuery(searchInput)
 // })
 
-const selectRandomTopic = (topics) => {
-  return topics[Math.floor(Math.random() * topics.length)]
+const selectRandomCategory = (categories) => {
+  return categories[Math.floor(Math.random() * categories.length)]
 }
 
-const defaultTopics = [
-    'TECHNOLOGY',
-    'SCIENCE',
-    'HEALTH',
+const defaultCategories = [
+    'GENERAL',
     'BUSINESS',
+    'ENTERTAINMENT',
+    'HEALTH',
+    'SCIENCE',
     'SPORTS',
-    'TRAVEL',
-    'FOOD',
-    'GAMES'
+    'TECHNOLOGY'
 ]
 
-const fillNavbarTopics = (topics) => {
+const fillNavbarCategories = (categories) => {
     const navbar = document.getElementById('navbar')
     navbar.innerHTML = ''
 
@@ -269,7 +295,7 @@ const fillNavbarTopics = (topics) => {
     navList.appendChild(hiddenNavItem2)
 
 
-    for (const topic of topics) {
+    for (const category of categories) {
         const navItem = document.createElement('li')
         navItem.classList.add('navbarItem')
         
@@ -278,10 +304,12 @@ const fillNavbarTopics = (topics) => {
         navLink.classList.add('navbarLink')
         navLink.classList.add('secondaryButton')
         navLink.href = '#'
-        navLink.textContent = topic
+        navLink.textContent = category
+        navLink.setAttribute('data-category', category.toLowerCase())
+
         navLink.addEventListener('click', event => {
             event.preventDefault()
-            fetchAndDisplayQuery(topic)
+            fetchAndDisplayQuery('', category)
         })
         navItem.appendChild(navLink)
         
@@ -289,33 +317,31 @@ const fillNavbarTopics = (topics) => {
     }
 }
 
-const fillTopicDropdown = (topics) => {
-    const topicDropDown = document.getElementById('topicDropDown')
-    topicDropDown.innerHTML = ''
+const fillCategoryDropdown = (categories) => {
+    const categoryDropDown = document.getElementById('categoryDropDown')
+    categoryDropDown.innerHTML = ''
 
     const defaultOption = document.createElement('option')
     defaultOption.value = 'none'
     defaultOption.id = 'defaultOption'
-    defaultOption.text = 'Example topics'
+    defaultOption.text = 'Example categories'
     defaultOption.selected = true
     defaultOption.disabled = true
     defaultOption.hidden = true
-    topicDropDown.appendChild(defaultOption)
+    categoryDropDown.appendChild(defaultOption)
 
-    for (const topic of topics) {
+    for (const category of categories) {
         const option = document.createElement('option')
-        option.value = topic
-        option.text = topic
-        topicDropDown.appendChild(option)
+        option.value = category
+        option.text = category
+        categoryDropDown.appendChild(option)
     }
 }
-// calls the api request function when the page is loaded with selected topic
+// calls the api request function when the page is loaded with selected category
 document.addEventListener('DOMContentLoaded', () => {
 
-    const currentTopic = selectRandomTopic(defaultTopics)
-
-    fetchAndDisplayQuery(currentTopic)
-    fillNavbarTopics(defaultTopics)
+    fillNavbarCategories(defaultCategories)
+    fetchAndDisplayQuery('',currentCategory)
 
 
     let currentWindowWidth = window.innerWidth
@@ -327,8 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!throttled) {
             let newWindowWidth = window.innerWidth
             if (newWindowWidth !== currentWindowWidth) {
-                console.log('new width detected')
-                fetchAndDisplayQuery(currentTopic)
+                // console.log('new width detected')
+                fetchAndDisplayQuery('',currentCategory)
                 throttled = true
                 setTimeout(() => {
                     throttled = false
@@ -345,12 +371,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const searchInput = document.getElementById('searchInput').value
 
         if (searchInput) {
-            fetchAndDisplayQuery(searchInput.toUpperCase())
+            currentQuery = searchInput
+            currentCategory = 'GENERAL'
+            fetchAndDisplayQuery(searchInput.toUpperCase(),currentCategory)
         }
     })
 
-    // const topicDropDown = document.getElementById('topicDropDown')
-    // topicDropDown.addEventListener('change', event => {
+    // const categoryDropDown = document.getElementById('categoryDropDown')
+    // categoryDropDown.addEventListener('change', event => {
     //     const dropDownChoice = event.target.value
     //     fetchAndDisplayQuery(dropDownChoice)
 
@@ -382,3 +410,5 @@ const invokeEdgeFunction = async (action) => {
 
 // invokeEdgeFunction()
 
+
+// need to limit amount of pages based on how many results you get
