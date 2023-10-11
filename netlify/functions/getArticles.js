@@ -13,31 +13,39 @@ const formatPastDate = (days) => {
 exports.handler = async (event, context) => {
     try {
       const { query } = event.queryStringParameters
-      const url = `https://newsapi.org/v2/everything?q=${query}` +
-        `&language=en` +
-        `&pageSize=80` +
-        `&from=${formatPastDate(30)}` +
-        `&sortBy=relevancy` +
-        `&excludeDomains=slashdot.org` +
-        `&apiKey=${process.env.NEWS_API_KEY}`
+      // const url = `https://newsapi.org/v2/everything?q=${query}` +
+      //   `&language=en` +
+      //   `&pageSize=80` +
+      //   `&from=${formatPastDate(30)}` +
+      //   `&sortBy=relevancy` +
+      //   `&excludeDomains=slashdot.org` +
+      //   `&apiKey=${process.env.NEWS_API_KEY}`
   
+      const url = `https://newsdata.io/api/1/news?apikey=${process.env.NEWSDATA_API_KEY}` +
+      `&q=${query}` +
+      `&language=en` + 
+      `&image=1` +
+      `&excludedomain=dailystar.co.uk,dailymail.co.uk`
+
       let response = await axios.get(url,
         {
             headers: { Accept: "application/json", "Accept-Encoding": "identity" },
-            params: { trophies: true },
+            // params: { trophies: true },
         } 
       )
 
-      let articles = response.data.articles
-  
+      let articles = response.data.results
+      // console.log('Response from API:', response)
+      // console.log(articles)
       return {
         statusCode: 200,
         body: JSON.stringify({ articles }),
       }
     } catch (error) {
+      console.log(error)
       return {
         statusCode: 500,
-        body: JSON.stringify({ error }),
+        body: JSON.stringify({ error }), 
       }
     }
   }

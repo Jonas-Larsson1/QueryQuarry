@@ -131,13 +131,13 @@ const displayArticles = (articles, query) => {
                 to bottom, rgba(0, 0, 0, 0.0) 0%,   
                 rgba(0, 0, 0, 0.5) 50%, 
                 rgba(0, 0, 0, 1) 100%), 
-                url('${article.urlToImage}')">
+                url('${article.image_url}')">
 
                 <h2>${article.title}</h2> 
                 <div class="articleCardContent">
                     <p>${article.description}</p>
-                    <span class="author">${article.author}</span>
-                    <span class="source">Continue reading:&nbsp;<a href="${article.url}" target="_blank">${article.source.name}</a></span>
+                    <span class="author">${article.creator}</span>
+                    <span class="source">Continue reading:&nbsp;<a href="${article.link}" target="_blank">${article.source_id}</a></span>
                 </div>
             </div>
             `
@@ -215,8 +215,9 @@ const fetchAndDisplayQuery = async (query) => {
             })
     
           const data = await response.json()
-      
-          articles = data.articles;
+          
+          articles = data.articles
+
           const queryParam = query
           displayArticles(articles, queryParam)
           saveToSessionStorage(articles, queryParam)
