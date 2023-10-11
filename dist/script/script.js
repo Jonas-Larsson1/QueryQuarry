@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!throttled) {
             let newWindowWidth = window.innerWidth
             if (newWindowWidth !== currentWindowWidth) {
-                console.log('new width detected')
+                // console.log('new width detected')
                 fetchAndDisplayQuery(currentTopic)
                 throttled = true
                 setTimeout(() => {

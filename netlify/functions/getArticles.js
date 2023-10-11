@@ -23,9 +23,12 @@ exports.handler = async (event, context) => {
   
       const url = `https://newsdata.io/api/1/news?apikey=${process.env.NEWSDATA_API_KEY}` +
       `&q=${query}` +
-      `&language=en` + 
+      `&language=en` +
+      `&country=us` +
       `&image=1` +
-      `&excludedomain=dailystar.co.uk,dailymail.co.uk`
+      `&excludedomain=dailystar.co.uk,dailymail.co.uk` + 
+      `&prioritydomain=top` + 
+      `&full_content=1`
 
       let response = await axios.get(url,
         {
