@@ -12,14 +12,15 @@ const formatPastDate = (days) => {
 
 exports.handler = async (event, context) => {
     try {
-      const { query } = event.queryStringParameters
+      const { query, category } = event.queryStringParameters
 
       const url = `http://api.mediastack.com/v1/news?access_key=${process.env.MEDIASTACK_API_KEY}` +
+      `&categories=${category}` +
       `&keywords=${query}` +
       `&languages=en` +
       `&countries=us` +
       `&sort=popularity` +
-      `&sources=-phys` +
+      `&sources=-phys,-nytimes,-science` +
       `&limit=100` 
 
       let response = await axios.get(url,
@@ -37,7 +38,7 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ articles }),
       }
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return {
         statusCode: 500,
         body: JSON.stringify({ error }), 

@@ -1,4 +1,4 @@
-const currentTopic = ''
+let currentTopic = 'GENERAL'
 
 const handleShowMoreButton = () => {
     const showMoreButtons = document.getElementsByClassName('showMoreButton')
@@ -69,9 +69,9 @@ const handleEndlessScroll = () => {
     }, delay)
 }
 
-const saveToSessionStorage = (articles, query) => {
+const saveToSessionStorage = (articles, query, category) => {
     const articlesString = JSON.stringify(articles)
-    sessionStorage.setItem(`${query}_Articles`, articlesString)
+    sessionStorage.setItem(`Category:${category}_Query:${query}`, articlesString)
 }
 
 // creates the article elements on the page based on the article objects it recieves
@@ -194,7 +194,6 @@ const displayArticles = (articles, query) => {
 
 
     }
-    updateCurrentTopic(query)
     // fillTopicDropdown(defaultTopics)
     const searchInput = document.getElementById('searchInput')
     searchInput.value = ''
@@ -203,15 +202,25 @@ const displayArticles = (articles, query) => {
 }
 
 // updates the current topic headline
-const updateCurrentTopic = (query) => {
+const updateCurrentTopic = (query,category) => {
     const currentTopicElement = document.getElementById('currentTopic')
-    currentTopicElement.textContent = `${query}`
+    
+    const navbarLinks = document.querySelectorAll('.navbarLink');
+    navbarLinks.forEach(link => {
+        link.classList.remove('selected');
+    });
+    const activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
+    activeNavLink.classList.add('selected')
+
+    currentTopicElement.textContent = `${category.toUpperCase()}`
 }
 
 
-const fetchAndDisplayQuery = async (query) => {
-    const apiUrl = `/.netlify/functions/getArticles?query=${query}`
-    const savedArticlesString = sessionStorage.getItem(`${query}_Articles`)
+const fetchAndDisplayQuery = async (query, category) => {
+    const lowercaseCategory = category ? category.toLowerCase() : ''
+    const apiUrl = `/.netlify/functions/getArticles?query=${query}&category=${lowercaseCategory}`
+
+    const savedArticlesString = sessionStorage.getItem(`Category:${category}_Query:${query}`)
     let articles 
 
     if (!savedArticlesString) {
@@ -224,21 +233,21 @@ const fetchAndDisplayQuery = async (query) => {
     
           const data = await response.json()
           
-          console.log("data:",data)
           articles = data.articles
-          console.log("articles",articles)
 
-          const queryParam = query
-          displayArticles(articles, queryParam)
-          saveToSessionStorage(articles, queryParam)
-          
+
+
         } catch (error) {
             console.error('We got an error:', error);
         }
     } else {
         articles = JSON.parse(savedArticlesString)
-        displayArticles(articles, query)
     }
+
+    displayArticles(articles, query)
+    saveToSessionStorage(articles, query, category)
+    updateCurrentTopic(query,category)
+    currentTopic = category.toUpperCase()
 }
 
 // const searchForm = document.getElementById('searchForm')
@@ -253,14 +262,13 @@ const selectRandomTopic = (topics) => {
 }
 
 const defaultTopics = [
-    'TECHNOLOGY',
-    'SCIENCE',
-    'HEALTH',
+    'GENERAL',
     'BUSINESS',
+    'ENTERTAINMENT',
+    'HEALTH',
+    'SCIENCE',
     'SPORTS',
-    'TRAVEL',
-    'FOOD',
-    'GAMES'
+    'TECHNOLOGY'
 ]
 
 const fillNavbarTopics = (topics) => {
@@ -290,9 +298,12 @@ const fillNavbarTopics = (topics) => {
         navLink.classList.add('secondaryButton')
         navLink.href = '#'
         navLink.textContent = topic
+        navLink.setAttribute('data-category', topic.toLowerCase())
+
         navLink.addEventListener('click', event => {
             event.preventDefault()
-            fetchAndDisplayQuery(topic)
+            fetchAndDisplayQuery('', topic)
+            
         })
         navItem.appendChild(navLink)
         
@@ -323,10 +334,8 @@ const fillTopicDropdown = (topics) => {
 // calls the api request function when the page is loaded with selected topic
 document.addEventListener('DOMContentLoaded', () => {
 
-    const currentTopic = selectRandomTopic(defaultTopics)
-
-    fetchAndDisplayQuery(currentTopic)
     fillNavbarTopics(defaultTopics)
+    fetchAndDisplayQuery('',currentTopic)
 
 
     let currentWindowWidth = window.innerWidth
@@ -339,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let newWindowWidth = window.innerWidth
             if (newWindowWidth !== currentWindowWidth) {
                 // console.log('new width detected')
-                fetchAndDisplayQuery(currentTopic)
+                fetchAndDisplayQuery('',currentTopic)
                 throttled = true
                 setTimeout(() => {
                     throttled = false
@@ -356,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const searchInput = document.getElementById('searchInput').value
 
         if (searchInput) {
-            fetchAndDisplayQuery(searchInput.toUpperCase())
+            fetchAndDisplayQuery(searchInput.toUpperCase(),'')
         }
     })
 

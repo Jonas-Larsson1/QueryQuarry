@@ -126,6 +126,10 @@ main {
     box-shadow: inset 1px 1px 10px black;
 }
 
+.secondaryButton.selected {
+    border-color: red !important;
+}
+
 .noDisplay {
     display: none;
 }
