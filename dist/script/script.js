@@ -115,13 +115,21 @@ const displayArticles = (articles, query) => {
         const articlesToDisplayOnThisPage = (i === 0 && articlesToDisplay > 1) ? articlesToDisplay - 1 : articlesToDisplay
 
         for (let j = 0; j < articlesToDisplayOnThisPage && articleCount < articles.length; j++) {
-
-            
-
             const article = articles[articleCount]
             // console.log('Article title:', article.title)
             // console.log('Article description', article.description)
             
+            let author = article.author
+            let description = article.description
+
+            if (!article.author) {
+                author = ""
+            }
+
+            if (description.length > 200) {
+                description = description.slice(0, 200) + '...'
+            } 
+
             const articleElement = document.createElement('article')
             articleElement.classList.add('coolShadow')
 
@@ -135,8 +143,8 @@ const displayArticles = (articles, query) => {
 
                 <h2>${article.title}</h2> 
                 <div class="articleCardContent">
-                    <p>${article.description}</p>
-                    <span class="author">${article.author}</span>
+                    <p>${description}</p>
+                    <span class="author">${author}</span>
                     <span class="source">Continue reading:&nbsp;<a href="${article.url}" target="_blank">${article.source}</a></span>
                 </div>
             </div>

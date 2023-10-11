@@ -17,7 +17,9 @@ exports.handler = async (event, context) => {
       const url = `http://api.mediastack.com/v1/news?access_key=${process.env.MEDIASTACK_API_KEY}` +
       `&keywords=${query}` +
       `&languages=en` +
+      `&countries=us` +
       `&sort=popularity` +
+      `&sources=-phys` +
       `&limit=100` 
 
       let response = await axios.get(url,
@@ -27,7 +29,7 @@ exports.handler = async (event, context) => {
         } 
       )
 
-      let articles = response.data.data
+      let articles = response.data.data.filter(article => article.image)
       // console.log('Response from API:', response)
       // console.log(articles)
       return {
