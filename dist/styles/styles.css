@@ -29,26 +29,6 @@ main {
 }
 
 
-footer {
-    display: none;
-
-    bottom: 0;
-    right: 0;
-    position: fixed;
-    margin-top: 2rem;
-    background: linear-gradient(90deg, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
-    color: white;
-    text-align: center;
-    height: 1.5rem;
-    opacity: 0.5;
-    transition: 0.5s;
-    padding: 1rem;
-}
-
-footer:hover {
-    opacity: 1;
-    transition: 0.5s;
-}
 
 .coolShadow{
     position: relative;
