@@ -13,22 +13,12 @@ const formatPastDate = (days) => {
 exports.handler = async (event, context) => {
     try {
       const { query } = event.queryStringParameters
-      // const url = `https://newsapi.org/v2/everything?q=${query}` +
-      //   `&language=en` +
-      //   `&pageSize=80` +
-      //   `&from=${formatPastDate(30)}` +
-      //   `&sortBy=relevancy` +
-      //   `&excludeDomains=slashdot.org` +
-      //   `&apiKey=${process.env.NEWS_API_KEY}`
-  
-      const url = `https://newsdata.io/api/1/news?apikey=${process.env.NEWSDATA_API_KEY}` +
-      `&q=${query}` +
-      `&language=en` +
-      `&country=us` +
-      `&image=1` +
-      `&excludedomain=dailystar.co.uk,dailymail.co.uk` + 
-      `&prioritydomain=top` + 
-      `&full_content=1`
+
+      const url = `http://api.mediastack.com/v1/news?access_key=${process.env.MEDIASTACK_API_KEY}` +
+      `&keywords=${query}` +
+      `&languages=en` +
+      `&sort=popularity` +
+      `&limit=100` 
 
       let response = await axios.get(url,
         {
@@ -37,7 +27,7 @@ exports.handler = async (event, context) => {
         } 
       )
 
-      let articles = response.data.results
+      let articles = response.data.data
       // console.log('Response from API:', response)
       // console.log(articles)
       return {

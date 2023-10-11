@@ -131,13 +131,13 @@ const displayArticles = (articles, query) => {
                 to bottom, rgba(0, 0, 0, 0.0) 0%,   
                 rgba(0, 0, 0, 0.5) 50%, 
                 rgba(0, 0, 0, 1) 100%), 
-                url('${article.image_url}')">
+                url('${article.image}')">
 
                 <h2>${article.title}</h2> 
                 <div class="articleCardContent">
                     <p>${article.description}</p>
-                    <span class="author">${article.creator}</span>
-                    <span class="source">Continue reading:&nbsp;<a href="${article.link}" target="_blank">${article.source_id}</a></span>
+                    <span class="author">${article.author}</span>
+                    <span class="source">Continue reading:&nbsp;<a href="${article.url}" target="_blank">${article.source}</a></span>
                 </div>
             </div>
             `
@@ -216,7 +216,9 @@ const fetchAndDisplayQuery = async (query) => {
     
           const data = await response.json()
           
+          console.log("data:",data)
           articles = data.articles
+          console.log("articles",articles)
 
           const queryParam = query
           displayArticles(articles, queryParam)

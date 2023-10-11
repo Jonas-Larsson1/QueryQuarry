@@ -164,7 +164,7 @@ article {
 }
 
 .articleCardContent a {
-    color: indianred;
+    color: #f79d03;
 }
 
 @media (hover: hover){
