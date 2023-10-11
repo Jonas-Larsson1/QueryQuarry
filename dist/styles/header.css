@@ -105,5 +105,10 @@ header {
 }
 
 #currentCategory {
+    display: none;
+    color: #c71585;
+}
+
+#currentQuery {
     color: #c71585;
 }

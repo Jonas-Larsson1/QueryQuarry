@@ -1,4 +1,5 @@
 let currentCategory = 'GENERAL'
+let currentQuery = ''
 
 const handleShowMoreButton = () => {
     const showMoreButtons = document.getElementsByClassName('showMoreButton')
@@ -204,6 +205,7 @@ const displayArticles = (articles, query) => {
 // updates the current category headline
 const updateCurrentCategory = (query,category) => {
     const currentCategoryElement = document.getElementById('currentCategory')
+    const currentQueryElement = document.getElementById('currentQuery')
     
     const navbarLinks = document.querySelectorAll('.navbarLink');
     navbarLinks.forEach(link => {
@@ -212,6 +214,11 @@ const updateCurrentCategory = (query,category) => {
     const activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
     activeNavLink.classList.add('selected')
 
+    if (!currentQueryElement.textContent) {
+        currentQueryElement.textContent = 'No query entered'
+    } else {
+        currentQueryElement.textContent = `${query.toUpperCase()}`
+    }
     currentCategoryElement.textContent = `${category.toUpperCase()}`
 }
 
@@ -303,7 +310,6 @@ const fillNavbarCategories = (categories) => {
         navLink.addEventListener('click', event => {
             event.preventDefault()
             fetchAndDisplayQuery('', category)
-            
         })
         navItem.appendChild(navLink)
         
@@ -365,7 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const searchInput = document.getElementById('searchInput').value
 
         if (searchInput) {
-            fetchAndDisplayQuery(searchInput.toUpperCase(),'')
+            currentQuery = searchInput
+            currentCategory = 'GENERAL'
+            fetchAndDisplayQuery(searchInput.toUpperCase(),currentCategory)
         }
     })
 
