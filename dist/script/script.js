@@ -1,4 +1,4 @@
-let currentTopic = 'GENERAL'
+let currentCategory = 'GENERAL'
 
 const handleShowMoreButton = () => {
     const showMoreButtons = document.getElementsByClassName('showMoreButton')
@@ -194,16 +194,16 @@ const displayArticles = (articles, query) => {
 
 
     }
-    // fillTopicDropdown(defaultTopics)
+    // fillCategoryDropdown(defaultCategories)
     const searchInput = document.getElementById('searchInput')
     searchInput.value = ''
     handleEndlessScroll()
     // handleShowMoreButton()
 }
 
-// updates the current topic headline
-const updateCurrentTopic = (query,category) => {
-    const currentTopicElement = document.getElementById('currentTopic')
+// updates the current category headline
+const updateCurrentCategory = (query,category) => {
+    const currentCategoryElement = document.getElementById('currentCategory')
     
     const navbarLinks = document.querySelectorAll('.navbarLink');
     navbarLinks.forEach(link => {
@@ -212,7 +212,7 @@ const updateCurrentTopic = (query,category) => {
     const activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
     activeNavLink.classList.add('selected')
 
-    currentTopicElement.textContent = `${category.toUpperCase()}`
+    currentCategoryElement.textContent = `${category.toUpperCase()}`
 }
 
 
@@ -246,8 +246,8 @@ const fetchAndDisplayQuery = async (query, category) => {
 
     displayArticles(articles, query)
     saveToSessionStorage(articles, query, category)
-    updateCurrentTopic(query,category)
-    currentTopic = category.toUpperCase()
+    updateCurrentCategory(query,category)
+    currentCategory = category.toUpperCase()
 }
 
 // const searchForm = document.getElementById('searchForm')
@@ -257,11 +257,11 @@ const fetchAndDisplayQuery = async (query, category) => {
 //     fetchAndDisplayQuery(searchInput)
 // })
 
-const selectRandomTopic = (topics) => {
-  return topics[Math.floor(Math.random() * topics.length)]
+const selectRandomCategory = (categories) => {
+  return categories[Math.floor(Math.random() * categories.length)]
 }
 
-const defaultTopics = [
+const defaultCategories = [
     'GENERAL',
     'BUSINESS',
     'ENTERTAINMENT',
@@ -271,7 +271,7 @@ const defaultTopics = [
     'TECHNOLOGY'
 ]
 
-const fillNavbarTopics = (topics) => {
+const fillNavbarCategories = (categories) => {
     const navbar = document.getElementById('navbar')
     navbar.innerHTML = ''
 
@@ -288,7 +288,7 @@ const fillNavbarTopics = (topics) => {
     navList.appendChild(hiddenNavItem2)
 
 
-    for (const topic of topics) {
+    for (const category of categories) {
         const navItem = document.createElement('li')
         navItem.classList.add('navbarItem')
         
@@ -297,12 +297,12 @@ const fillNavbarTopics = (topics) => {
         navLink.classList.add('navbarLink')
         navLink.classList.add('secondaryButton')
         navLink.href = '#'
-        navLink.textContent = topic
-        navLink.setAttribute('data-category', topic.toLowerCase())
+        navLink.textContent = category
+        navLink.setAttribute('data-category', category.toLowerCase())
 
         navLink.addEventListener('click', event => {
             event.preventDefault()
-            fetchAndDisplayQuery('', topic)
+            fetchAndDisplayQuery('', category)
             
         })
         navItem.appendChild(navLink)
@@ -311,31 +311,31 @@ const fillNavbarTopics = (topics) => {
     }
 }
 
-const fillTopicDropdown = (topics) => {
-    const topicDropDown = document.getElementById('topicDropDown')
-    topicDropDown.innerHTML = ''
+const fillCategoryDropdown = (categories) => {
+    const categoryDropDown = document.getElementById('categoryDropDown')
+    categoryDropDown.innerHTML = ''
 
     const defaultOption = document.createElement('option')
     defaultOption.value = 'none'
     defaultOption.id = 'defaultOption'
-    defaultOption.text = 'Example topics'
+    defaultOption.text = 'Example categories'
     defaultOption.selected = true
     defaultOption.disabled = true
     defaultOption.hidden = true
-    topicDropDown.appendChild(defaultOption)
+    categoryDropDown.appendChild(defaultOption)
 
-    for (const topic of topics) {
+    for (const category of categories) {
         const option = document.createElement('option')
-        option.value = topic
-        option.text = topic
-        topicDropDown.appendChild(option)
+        option.value = category
+        option.text = category
+        categoryDropDown.appendChild(option)
     }
 }
-// calls the api request function when the page is loaded with selected topic
+// calls the api request function when the page is loaded with selected category
 document.addEventListener('DOMContentLoaded', () => {
 
-    fillNavbarTopics(defaultTopics)
-    fetchAndDisplayQuery('',currentTopic)
+    fillNavbarCategories(defaultCategories)
+    fetchAndDisplayQuery('',currentCategory)
 
 
     let currentWindowWidth = window.innerWidth
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let newWindowWidth = window.innerWidth
             if (newWindowWidth !== currentWindowWidth) {
                 // console.log('new width detected')
-                fetchAndDisplayQuery('',currentTopic)
+                fetchAndDisplayQuery('',currentCategory)
                 throttled = true
                 setTimeout(() => {
                     throttled = false
@@ -369,8 +369,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    // const topicDropDown = document.getElementById('topicDropDown')
-    // topicDropDown.addEventListener('change', event => {
+    // const categoryDropDown = document.getElementById('categoryDropDown')
+    // categoryDropDown.addEventListener('change', event => {
     //     const dropDownChoice = event.target.value
     //     fetchAndDisplayQuery(dropDownChoice)
 
@@ -402,3 +402,5 @@ const invokeEdgeFunction = async (action) => {
 
 // invokeEdgeFunction()
 
+
+// need to limit amount of pages based on how many results you get
