@@ -200,22 +200,46 @@ const displayArticles = (articles, query) => {
 
 // updates the current category headline
 const updateCurrentCategory = (query,category) => {
-    const currentCategoryElement = document.getElementById('currentCategory')
-    const currentQueryElement = document.getElementById('currentQuery')
+    let activeNavLink
+    // const currentCategoryElement = document.getElementById('currentCategory')
+    // const currentQueryElement = document.getElementById('currentQuery')
     
     const navbarLinks = document.querySelectorAll('.navbarLink');
     navbarLinks.forEach(link => {
         link.classList.remove('selected');
     });
 
-    if (!query) {
-        const activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
-        activeNavLink.classList.add('selected')
+    if (document.getElementById('queryNavItem')) {
+        document.getElementById('queryNavItem').remove()
     }
 
-    currentQueryElement.textContent = `${query.toUpperCase()}`
+    if (!query) {
+        activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
+        
+    } else {
+        const navItem = document.createElement('li')
+        navItem.classList.add('navbarItem')
+        navItem.id = 'queryNavItem'
+        const navLink = document.createElement('a')
+        navLink.classList.add('secondaryButton')
+        navLink.classList.add('navbarLink')
+        navLink.href = '#'
+        navLink.textContent = query
+        navLink.setAttribute('data-category', query.toLowerCase())
+        navLink.addEventListener('click', event => {
+        event.preventDefault()
+            fetchAndDisplayQuery(query, '')
+        })
+        navItem.appendChild(navLink)        
+        document.getElementById('navbarList').appendChild(navItem)
+        activeNavLink = navLink
+    }
 
-    currentCategoryElement.textContent = `${category.toUpperCase()}`
+    activeNavLink.classList.add('selected')
+
+    // currentQueryElement.textContent = `${query.toUpperCase()}`
+
+    // currentCategoryElement.textContent = `${category.toUpperCase()}`
 }
 
 
@@ -280,7 +304,8 @@ const fillNavbarCategories = (categories) => {
 
     const navList = document.createElement('ul')
     navList.classList.add('navbarList')
-   
+    navList.id = 'navbarList'
+    
     navbar.appendChild(navList)
 
     const hiddenNavItem = document.createElement('div')
@@ -293,20 +318,24 @@ const fillNavbarCategories = (categories) => {
         
         
         const navLink = document.createElement('a')
-        navLink.classList.add('navbarLink')
         navLink.classList.add('secondaryButton')
+        navLink.classList.add('navbarLink')
         navLink.href = '#'
         navLink.textContent = category
         navLink.setAttribute('data-category', category.toLowerCase())
 
+       
         navLink.addEventListener('click', event => {
-            event.preventDefault()
+        event.preventDefault()
             fetchAndDisplayQuery('', category)
         })
-        navItem.appendChild(navLink)
-        
+     
+
+        navItem.appendChild(navLink)        
         navList.appendChild(navItem)
     }
+
+    
 }
 
 const fillCategoryDropdown = (categories) => {
