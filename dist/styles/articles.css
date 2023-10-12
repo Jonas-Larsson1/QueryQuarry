@@ -8,8 +8,10 @@
 
 
 .pageCount {
+    display: none;
+
     height: 0.5rem;
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
     width: 100%;

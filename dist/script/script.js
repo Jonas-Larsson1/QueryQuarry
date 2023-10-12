@@ -85,26 +85,26 @@ const displayArticles = (articles, query) => {
     hamburgerToggle.checked = false
     let mobileLayout = false
     
-    let articlesToDisplay, pagesToDisplay
+    let articlesPerPage
     if (window.innerWidth <= 1000) {
-        articlesToDisplay = 1
-        pagesToDisplay = 45
+        articlesPerPage = 1
         mobileLayout = true
     } else if (window.innerWidth <= 1200) {
-        articlesToDisplay = 4
-        pagesToDisplay = 9
+        articlesPerPage = 4
     } else {
-        articlesToDisplay = 5
-        pagesToDisplay = 9  
+        articlesPerPage = 5
     }
 
-    // articles.forEach((article, index) => {
+    let totalPages = Math.floor(articles.length / articlesPerPage)
+
     let articleCount = 0
     let pageCount = 0
 
+    console.log(articles.length)
+    console.log(articlesPerPage)
+    console.log(totalPages)
     
-    
-    for (let i = 0; i < pagesToDisplay; i++) {
+    for (let i = 0; i < totalPages; i++) {
         const pageElement = document.createElement('section')
         pageElement.classList.add('page')
         pageElement.id = `page${pageCount}`
@@ -113,9 +113,9 @@ const displayArticles = (articles, query) => {
         pageGrid.classList.add('pageGrid')
         pageElement.appendChild(pageGrid)
 
-        const articlesToDisplayOnThisPage = (i === 0 && articlesToDisplay > 1) ? articlesToDisplay - 1 : articlesToDisplay
+        const articlesPerPageOnThisPage = (i === 0 && articlesPerPage > 1) ? articlesPerPage - 1 : articlesPerPage
 
-        for (let j = 0; j < articlesToDisplayOnThisPage && articleCount < articles.length; j++) {
+        for (let j = 0; j < articlesPerPageOnThisPage && articleCount < articles.length; j++) {
             const article = articles[articleCount]
             // console.log('Article title:', article.title)
             // console.log('Article description', article.description)
@@ -168,14 +168,14 @@ const displayArticles = (articles, query) => {
             const pageCounterElement = document.createElement('div')
             pageCounterElement.classList.add('pageCount')
             pageCounterElement.innerHTML = `
-                <p>Page ${pageCount} out of ${pagesToDisplay} </p>
+                <p>Page ${pageCount} out of ${totalPages} </p>
             `
             pageElement.appendChild(pageCounterElement)
 
         }
 
         
-        if (i + 1 < pagesToDisplay) {
+        if (i + 1 < totalPages) {
             const scrollPromptElement = document.createElement('p')
             scrollPromptElement.classList.add('scrollPrompt')
             scrollPromptElement.id = (`scrollPrompt${pageCount - 1}`)
@@ -184,7 +184,7 @@ const displayArticles = (articles, query) => {
         }
         
 
-        // if (i + 1 < pagesToDisplay) {
+        // if (i + 1 < totalPages) {
 
         //     const showMoreButton = document.createElement('button')
         //     showMoreButton.classList.add('showMoreButton')
@@ -412,3 +412,4 @@ const invokeEdgeFunction = async (action) => {
 
 
 // need to limit amount of pages based on how many results you get
+// fix no query entered bug
