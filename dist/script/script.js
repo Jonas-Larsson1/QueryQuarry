@@ -214,11 +214,10 @@ const updateCurrentCategory = (query,category) => {
     const activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
     activeNavLink.classList.add('selected')
 
-    if (!currentQueryElement.textContent) {
-        currentQueryElement.textContent = 'No query entered'
-    } else {
-        currentQueryElement.textContent = `${query.toUpperCase()}`
-    }
+    
+
+    currentQueryElement.textContent = `${query.toUpperCase()}`
+
     currentCategoryElement.textContent = `${category.toUpperCase()}`
 }
 
@@ -289,10 +288,10 @@ const fillNavbarCategories = (categories) => {
 
     const hiddenNavItem = document.createElement('div')
     hiddenNavItem.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
-    const hiddenNavItem2 = document.createElement('div')
-    hiddenNavItem2.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
+    // const hiddenNavItem2 = document.createElement('div')
+    // hiddenNavItem2.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
     navList.appendChild(hiddenNavItem)
-    navList.appendChild(hiddenNavItem2)
+    // navList.appendChild(hiddenNavItem2)
 
 
     for (const category of categories) {

@@ -116,7 +116,7 @@
         font-size: 2rem;
     }
 
-    header {
+    .headerContainer {
         justify-content: center;
     }
 
@@ -177,16 +177,19 @@
         width: calc(100vw);
 
         scrollbar-gutter: stable;
+
     }
 
     .navbarList {
+        position: fixed;
+        top: 0;
+        z-index: 100;
         align-items: center;
         margin-top: 0;
         padding: 0;
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 10vh;
         height: 0;
         overflow: hidden;
         transition: height .4s ease;
@@ -229,6 +232,22 @@
         height: 5rem;
         font-size: 2rem;
     }
+
+    header {
+        position: fixed;
+        background-color: rgba(255, 255, 255, 0.95);
+    }
+
+    .headerBottom {
+        height: 0.5rem;
+        background: linear-gradient(90deg, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
+    }
+
+    .contentContainer {
+        margin-top: 10rem;
+    }
+
+
 }
 
 @media (max-width: 500px) {

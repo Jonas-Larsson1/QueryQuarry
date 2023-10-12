@@ -1,4 +1,9 @@
 header {
+    width: 100%;
+    z-index: 10;
+}
+
+.headerContainer {
     display: flex;
     padding: 1rem;
     justify-content: space-between;

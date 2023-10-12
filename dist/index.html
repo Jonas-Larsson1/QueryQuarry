@@ -24,41 +24,44 @@
     <title>Query Quarry</title>
 </head>
 
-<body class="siteContainer" ontouchstart=""> 
-    <header>
-        <div id="headerLeft">
-            <img src="./images/logo2.svg">
-            <h3><em>Digging</em> up the latest news across the web.</h3>
-        </div>
+<body class="siteContainer" ontouchstart="">
+    <header> 
+        <div class="headerContainer">
+            <div id="headerLeft">
+                <img src="./images/logo2.svg">
+                <h3><em>Digging</em> up the latest news across the web.</h3>
+            </div>
 
-        <div id="headerMiddle"> 
-            <form id="searchForm" autocomplete="off">
-                <input type="text" 
-                id="searchInput" 
-                placeholder="Enter a search query." 
-                onfocus="this.placeholder='Search for anything..'" 
-                onfocusout="this.placeholder='Enter a search query.'">
-                <button type="submit" class="primaryButton" id="searchButton"><span>Search</span></button>
-            </form>
-            <h2 id="currentCategory">Current category: <span ></span></h2>
-            <h2>Current query: <span id="currentQuery"></span></h2>
-        </div>
+            <div id="headerMiddle"> 
+                <form id="searchForm" autocomplete="off">
+                    <input type="text" 
+                    id="searchInput" 
+                    placeholder="Enter a search query." 
+                    onfocus="this.placeholder='Search for anything..'" 
+                    onfocusout="this.placeholder='Enter a search query.'">
+                    <button type="submit" class="primaryButton" id="searchButton"><span>Search</span></button>
+                </form>
+                <h2 id="currentCategory">Current category: <span ></span></h2>
+                <h2>Current query: <span id="currentQuery"></span></h2>
+            </div>
 
-        <div id="headerRight">
-            <img src="./images/logo2small.svg">
+            <div id="headerRight">
+                <img src="./images/logo2small.svg">
+            </div>
+                <!-- <p>Or choose below:</p>
+                <select name="topicDropDown" id="topicDropDown">
+                </select> -->
         </div>
-            <!-- <p>Or choose below:</p>
-            <select name="topicDropDown" id="topicDropDown">
-            </select> -->
+        <input id="hamburgerToggle" type="checkbox" />
+        <label class="hamburgerMenu" for="hamburgerToggle">
+            <div class="top"></div>
+            <div class="meat"></div>
+            <div class="bottom"></div>
+        </label>
+        <nav id="navbar">
+        </nav>
+        <div class="headerBottom"></div>
     </header>
-    <input id="hamburgerToggle" type="checkbox" />
-    <label class="hamburgerMenu" for="hamburgerToggle">
-        <div class="top"></div>
-        <div class="meat"></div>
-        <div class="bottom"></div>
-    </label>
-    <nav id="navbar">
-    </nav>
         
     <div class="contentContainer">
         <main>
