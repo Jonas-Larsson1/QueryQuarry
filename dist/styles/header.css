@@ -58,7 +58,7 @@ header {
 }
 
 #headerLeft img {
-    height: 12rem;
+    height: 9rem;
 }
 
 #headerLeft em {
@@ -91,6 +91,7 @@ header {
     margin-bottom: 1rem;
     border: 3px solid rgb(0, 0, 0);
 }
+
 
 #searchForm button {
     width: 7rem;

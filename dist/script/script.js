@@ -57,7 +57,7 @@ const handleEndlessScroll = () => {
   
     window.addEventListener('scroll', () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement
-      if (scrollTop + clientHeight >= scrollHeight - 400) {
+      if (scrollTop + clientHeight >= scrollHeight - 600) {
         scrollPromptElement.classList.add('noOpacity')
         showNextPage()
       }
@@ -99,10 +99,6 @@ const displayArticles = (articles, query) => {
 
     let articleCount = 0
     let pageCount = 0
-
-    console.log(articles.length)
-    console.log(articlesPerPage)
-    console.log(totalPages)
     
     for (let i = 0; i < totalPages; i++) {
         const pageElement = document.createElement('section')
@@ -211,10 +207,11 @@ const updateCurrentCategory = (query,category) => {
     navbarLinks.forEach(link => {
         link.classList.remove('selected');
     });
-    const activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
-    activeNavLink.classList.add('selected')
 
-    
+    if (!query) {
+        const activeNavLink = document.querySelector(`.navbarLink[data-category="${category.toLowerCase()}"]`)
+        activeNavLink.classList.add('selected')
+    }
 
     currentQueryElement.textContent = `${query.toUpperCase()}`
 
@@ -268,12 +265,12 @@ const selectRandomCategory = (categories) => {
 }
 
 const defaultCategories = [
-    'GENERAL',
     'BUSINESS',
     'ENTERTAINMENT',
-    'HEALTH',
-    'SCIENCE',
     'SPORTS',
+    'GENERAL',
+    'SCIENCE',
+    'HEALTH',
     'TECHNOLOGY'
 ]
 
@@ -288,11 +285,7 @@ const fillNavbarCategories = (categories) => {
 
     const hiddenNavItem = document.createElement('div')
     hiddenNavItem.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
-    // const hiddenNavItem2 = document.createElement('div')
-    // hiddenNavItem2.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
     navList.appendChild(hiddenNavItem)
-    // navList.appendChild(hiddenNavItem2)
-
 
     for (const category of categories) {
         const navItem = document.createElement('li')
@@ -409,6 +402,5 @@ const invokeEdgeFunction = async (action) => {
 
 // invokeEdgeFunction()
 
-
-// need to limit amount of pages based on how many results you get
 // fix no query entered bug
+// database?
