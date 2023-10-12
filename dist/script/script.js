@@ -308,10 +308,12 @@ const fillNavbarCategories = (categories) => {
     
     navbar.appendChild(navList)
 
-    const hiddenNavItem = document.createElement('div')
-    hiddenNavItem.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
-    navList.appendChild(hiddenNavItem)
-
+    for (let i = 0; i < 2; i++) {
+        const hiddenNavItem = document.createElement('div')
+        hiddenNavItem.classList.add('hiddenItem', 'noOpacity', 'noDisplay')
+        navList.appendChild(hiddenNavItem)
+    }
+    
     for (const category of categories) {
         const navItem = document.createElement('li')
         navItem.classList.add('navbarItem')

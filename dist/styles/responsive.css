@@ -108,13 +108,13 @@
         overflow: hidden; 
     }
 
-    article:nth-child(1n) p {
+    /* article:nth-child(1n) p {
         font-size: 1.5rem;
     }
 
     article:nth-child(1n) h2 {
         font-size: 2rem;
-    }
+    } */
 
     .headerContainer {
         justify-content: center;
@@ -173,7 +173,7 @@
     }
 
     #hamburgerToggle:checked ~ #navbar > .navbarList {
-        height: 100vh;
+        height: auto;
         width: calc(100vw);
 
         scrollbar-gutter: stable;
@@ -190,6 +190,7 @@
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(5,  5.5rem);
         height: 0;
         overflow: hidden;
         transition: height .4s ease;
@@ -232,8 +233,8 @@
     }
 
     .navbarLink {
-        width: 30vw;
-        height: 5rem;
+        width: 100%;
+        
         font-size: 2rem;
     }
 
@@ -267,13 +268,13 @@
         overflow: hidden; 
     }
 
-    article:nth-child(1n) p {
+    /* article:nth-child(1n) p {
         font-size: 1rem;
     }
 
     article:nth-child(1n) h2 {
         font-size: 1.5rem;
-    }
+    } */
 
     header {
         justify-content: start;
